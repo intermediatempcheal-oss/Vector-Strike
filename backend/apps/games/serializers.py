@@ -8,8 +8,13 @@ reflects real database state.
 from django.db.models import Count
 from django.utils import timezone
 
+from apps.games.identity import (
+    detail_identity_payload,
+    identity_payload,
+    mastery_payload,
+)
 from apps.games.models import Game, GameCategory
-from apps.games.services import age_eligible_games, xp_for_level
+from apps.games.services import adaptive_difficulty, age_eligible_games, xp_for_level
 
 DIFFICULTY_LABELS = {
     Game.Difficulty.RELAXED: "Relaxed",
@@ -56,6 +61,7 @@ def game_card(game, user=None, progress=None, with_description=False):
         "is_new": game.is_new,
         "is_featured": game.is_featured,
         "status": game.status,
+        "identity": identity_payload(game),
     }
     if with_description:
         data["description"] = game.description
@@ -67,8 +73,14 @@ def game_card(game, user=None, progress=None, with_description=False):
             "score": progress.score,
             "games_played": progress.games_played,
             "playtime_seconds": progress.playtime_seconds,
+            "best_accuracy": progress.best_accuracy,
+            "best_combo": progress.best_combo,
+            "best_time_seconds": progress.best_time_seconds,
             "last_played_at": progress.last_played_at and progress.last_played_at.isoformat() or None,
         }
+        data["mastery"] = mastery_payload(
+            game, progress.best_accuracy, progress.completion_percentage, progress.games_played
+        )
     return data
 
 
@@ -349,6 +361,11 @@ def session_payload(session):
         "level_reached": session.level_reached,
         "duration_seconds": session.duration_seconds,
         "xp_earned": session.xp_earned,
+        "game_mode": session.game_mode,
+        "difficulty": session.difficulty,
+        "mistakes": session.mistakes,
+        "best_combo": session.best_combo,
+        "completion_percentage": session.completion_percentage,
     }
 
 
@@ -388,6 +405,16 @@ def game_detail_payload(game, user):
                 session_payload(best) if best and best.score > 0 else None
             ),
             "related_games": game_cards_payload(related, user),
+            "identity": detail_identity_payload(game),
+            "best_combo": progress.best_combo if progress else 0,
+            "best_time_seconds": progress.best_time_seconds if progress else None,
+            "mastery": mastery_payload(
+                game,
+                progress.best_accuracy if progress else 0,
+                progress.completion_percentage if progress else 0,
+                progress.games_played if progress else 0,
+            ),
+            "recommended_difficulty": adaptive_difficulty(user, game),
         }
     )
     return card

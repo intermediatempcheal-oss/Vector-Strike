@@ -327,6 +327,8 @@ SESSION_MAX_LEVEL = 8       # games climb difficulty 1..8, not arbitrary.
 SESSION_XP_CAP = 150        # max XP a single run can award (platform rule).
 SESSION_SCORE_CAP = 5000    # defensive ceiling for reported raw score.
 SESSION_DURATION_CAP = 7200  # a run longer than 2h is a bug, not a feat.
+SESSION_MISTAKE_CAP = 999
+SESSION_COMBO_CAP = 999
 
 
 def _session_xp(score, accuracy, level):
@@ -345,6 +347,9 @@ def _clamp_report(payload):
         accuracy = int(payload.get("accuracy") or 0)
         level = int(payload.get("level_reached") or 1)
         duration = int(payload.get("duration_seconds") or 0)
+        mistakes = int(payload.get("mistakes") or 0)
+        combo = int(payload.get("best_combo") or 0)
+        completion = int(payload.get("completion") or 0)
     except (TypeError, ValueError):
         raise ValueError("result metrics must be integers")
     outcome = str(payload.get("outcome") or "completed").lower().strip()
@@ -355,8 +360,133 @@ def _clamp_report(payload):
         "accuracy": max(0, min(accuracy, 100)),
         "level": max(1, min(level, SESSION_MAX_LEVEL)),
         "duration": max(0, min(duration, SESSION_DURATION_CAP)),
+        "mistakes": max(0, min(mistakes, SESSION_MISTAKE_CAP)),
+        "combo": max(0, min(combo, SESSION_COMBO_CAP)),
+        "completion": max(0, min(completion, 100)),
         "outcome": outcome,
     }
+
+
+# ---------------------------------------------------------------------------
+# Difficulty engine — adapts to genuine recent performance, never jumps.
+# ---------------------------------------------------------------------------
+
+ADAPTIVE_WINDOW = 5
+DIFFICULTY_MIN = 1
+DIFFICULTY_MAX = 6
+
+
+def adaptive_difficulty(user, game):
+    """Starting difficulty for the next run based on the last few runs.
+
+    Strong, consistent success nudges difficulty up one step; repeated
+    failure or low accuracy eases it down one step. Never moves more than
+    one step from the player's last difficulty.
+    """
+    from apps.games.models import GameSession
+
+    recent = list(
+        GameSession.objects.filter(
+            user=user,
+            game=game,
+            status__in=[GameSession.Status.COMPLETED, GameSession.Status.FAILED],
+        )
+        .order_by("-started_at")
+        .values("status", "accuracy", "difficulty")[:ADAPTIVE_WINDOW]
+    )
+    base = max(DIFFICULTY_MIN, min(game.difficulty, DIFFICULTY_MAX))
+    if not recent:
+        return base
+
+    last = recent[0]["difficulty"] or base
+    avg_acc = sum(r["accuracy"] for r in recent) / len(recent)
+    failures = sum(1 for r in recent if r["status"] == GameSession.Status.FAILED)
+    wins = len(recent) - failures
+
+    step = 0
+    if avg_acc >= 85 and wins >= min(3, len(recent)):
+        step = 1
+    elif avg_acc < 50 or failures >= 2:
+        step = -1
+    return max(DIFFICULTY_MIN, min(last + step, DIFFICULTY_MAX))
+
+
+# ---------------------------------------------------------------------------
+# Vector Feed — the "next up" game after a run. Familiar + Challenging + New.
+# ---------------------------------------------------------------------------
+
+
+def next_games(user, current_game, limit=3):
+    """Mix categories so the player never has to return to the hub.
+
+    Slot 1 (new): a game in a category the player has not played yet.
+    Slot 2 (familiar): same mechanic family the player enjoyed, other game.
+    Slot 3 (challenging): a harder game in a category they have played.
+    Remaining slots fall back to the balanced recommendation engine.
+    """
+    pool = list(
+        age_eligible_games(user.age)
+        .exclude(pk=current_game.pk)
+        .select_related("category")
+    )
+    if not pool:
+        return []
+
+    played = {
+        row.game_id: row
+        for row in user.game_progress.filter(games_played__gte=1)
+    }
+    played_categories = {g.category_id for g in pool if g.id in played}
+    played_categories.add(current_game.category_id)
+    preferred_kinds = set(
+        user.game_progress.filter(games_played__gte=1, completion_percentage__gte=25)
+        .values_list("game__play_kind", flat=True)
+    )
+    preferred_kinds.add(current_game.play_kind)
+
+    picked = []
+
+    def take(candidates):
+        for game in candidates:
+            if game.id not in {p.id for p in picked}:
+                picked.append(game)
+                return
+
+    take(
+        sorted(
+            (g for g in pool if g.category_id not in played_categories and g.id not in played),
+            key=lambda g: (g.difficulty, -int(g.is_featured), g.title),
+        )
+    )
+    take(
+        sorted(
+            (
+                g
+                for g in pool
+                if g.play_kind in preferred_kinds
+                and g.category_id != current_game.category_id
+            ),
+            key=lambda g: (g.id in played, abs(g.difficulty - current_game.difficulty), g.title),
+        )
+    )
+    take(
+        sorted(
+            (
+                g
+                for g in pool
+                if g.category_id in played_categories and g.difficulty > current_game.difficulty
+            ),
+            key=lambda g: (g.difficulty, g.title),
+        )
+    )
+    if len(picked) < limit:
+        for game in get_recommendation_service().recommend(
+            age_eligible_games(user.age).exclude(pk=current_game.pk), user, limit=limit * 2
+        ):
+            if len(picked) >= limit:
+                break
+            take([game])
+    return picked[:limit]
 
 
 def _award_user_achievement(user, slug):
@@ -399,6 +529,9 @@ def complete_session(user, session_id, payload):
     session.accuracy = report["accuracy"]
     session.level_reached = report["level"]
     session.duration_seconds = report["duration"]
+    session.mistakes = report["mistakes"]
+    session.best_combo = report["combo"]
+    session.completion_percentage = report["completion"]
     session.xp_earned = xp
     session.completed_at = timezone.now()
     session.save()
@@ -409,9 +542,18 @@ def complete_session(user, session_id, payload):
     progress.playtime_seconds += report["duration"]
     progress.current_level = max(progress.current_level or 1, report["level"])
     progress.completion_percentage = max(progress.completion_percentage or 0, pct)
-    if not failed:
+    progress.best_combo = max(progress.best_combo or 0, report["combo"])
+    if failed:
+        progress.losses += 1
+    else:
+        progress.wins += 1
         progress.xp += xp
         progress.score = max(progress.score or 0, report["score"])
+        progress.best_accuracy = max(progress.best_accuracy or 0, report["accuracy"])
+        if report["duration"] > 0 and (
+            progress.best_time_seconds is None or report["duration"] < progress.best_time_seconds
+        ):
+            progress.best_time_seconds = report["duration"]
     progress.last_played_at = timezone.now()
     progress.save()
 

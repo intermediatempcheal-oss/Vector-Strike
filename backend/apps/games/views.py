@@ -4,13 +4,16 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from apps.games import serializers as games_serializers
+from apps.games.identity import mastery_payload, modes_for
 from apps.games.models import Game, GameCategory
 from apps.games.services import (
+    adaptive_difficulty,
     age_eligible_games,
     complete_session,
     get_recommendation_service,
     hub_context,
     home_context,
+    next_games,
 )
 
 
@@ -202,7 +205,12 @@ def hub_session_create_view(request, slug):
     game = age_eligible_games(age).filter(slug=slug, status=Game.Status.PUBLISHED).first()
     if game is None:
         return Response({"detail": "We couldn't load this game."}, status=404)
-    session = game.sessions.create(user=request.user)
+    allowed_modes = modes_for(game)
+    mode = str((request.data or {}).get("mode") or allowed_modes[0]).strip().lower()
+    if mode not in allowed_modes:
+        return Response({"detail": "That mode isn't available for this game."}, status=400)
+    difficulty = adaptive_difficulty(request.user, game)
+    session = game.sessions.create(user=request.user, game_mode=mode, difficulty=difficulty)
     return Response(
         {
             "session": games_serializers.session_payload(session),
@@ -219,9 +227,23 @@ def hub_session_complete_view(request, pk):
     try:
         payload = complete_session(request.user, pk, dict(request.data or {}))
     except ValueError as exc:
-        return Response({"detail": str(exc)}, status=404)
+        message = str(exc)
+        status_code = 404 if message == "session not found" else 400
+        return Response({"detail": message}, status=status_code)
     except PermissionError:
         return Response({"detail": "not your session"}, status=403)
+    game = Game.objects.select_related("category").get(slug=payload["game_slug"])
+    progress = request.user.game_progress.filter(game=game).first()
+    payload["mastery"] = mastery_payload(
+        game,
+        progress.best_accuracy if progress else 0,
+        progress.completion_percentage if progress else 0,
+        progress.games_played if progress else 0,
+    )
+    payload["next_difficulty"] = adaptive_difficulty(request.user, game)
+    payload["next_games"] = games_serializers.game_cards_payload(
+        next_games(request.user, game), request.user
+    )
     return Response(payload)
 
 

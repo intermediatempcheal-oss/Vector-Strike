@@ -86,6 +86,11 @@ class Game(models.Model):
     # Gameplay mechanics identity (Phase 9): routes a game to its play runtime.
     play_kind = models.CharField(max_length=40, blank=True, default="")
     mechanics = models.CharField(max_length=120, blank=True, default="")
+    # Universal gameplay foundation: optional per-game overrides of the
+    # mechanic defaults declared in ``apps.games.identity.MECHANICS``.
+    game_modes = models.JSONField(default=list, blank=True)
+    orientation = models.CharField(max_length=12, blank=True, default="")
+    visual_style = models.CharField(max_length=40, blank=True, default="")
     duration_minutes = models.PositiveIntegerField(default=8, blank=True, null=True)
     instructions = models.TextField(blank=True, default="")
     controls = models.TextField(blank=True, default="")
@@ -142,6 +147,9 @@ class UserGameProgress(models.Model):
     xp = models.PositiveIntegerField(default=0)
     score = models.PositiveIntegerField(default=0)
     completion_percentage = models.PositiveIntegerField(default=0)
+    best_accuracy = models.PositiveIntegerField(default=0)
+    best_combo = models.PositiveIntegerField(default=0)
+    best_time_seconds = models.PositiveIntegerField(blank=True, null=True)
     playtime_seconds = models.PositiveIntegerField(default=0)
     last_played_at = models.DateTimeField(blank=True, null=True)
     games_played = models.PositiveIntegerField(default=0)
@@ -348,6 +356,11 @@ class GameSession(models.Model):
     level_reached = models.PositiveIntegerField(default=1)
     duration_seconds = models.PositiveIntegerField(default=0)
     xp_earned = models.PositiveIntegerField(default=0)
+    game_mode = models.CharField(max_length=20, default="quick", db_index=True)
+    difficulty = models.PositiveIntegerField(default=1)
+    mistakes = models.PositiveIntegerField(default=0)
+    best_combo = models.PositiveIntegerField(default=0)
+    completion_percentage = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
