@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="300" viewBox="0 0 420 300" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e1b4b"/>
+      <stop offset="1" stop-color="#0b1124"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.4" r="0.6">
+      <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="420" height="300" rx="26" fill="url(#sky)"/>
+  <circle cx="210" cy="120" r="120" fill="url(#sun)"/>
+  <g fill="#dbeafe" opacity="0.85">
+    <circle cx="70" cy="60" r="1.5"/><circle cx="180" cy="40" r="1.2"/>
+    <circle cx="320" cy="70" r="1.6"/><circle cx="360" cy="150" r="1.2"/>
+    <circle cx="120" cy="170" r="1.3"/><circle cx="290" cy="40" r="1.1"/>
+  </g>
+  <!-- mountains -->
+  <path d="M0 220 L70 130 L150 220 Z" fill="#312e81" opacity="0.85"/>
+  <path d="M110 240 L210 120 L320 240 Z" fill="#4338ca" opacity="0.9"/>
+  <path d="M270 240 L370 140 L420 190 L420 240 Z" fill="#4c1d95"/>
+  <!-- floating play button -->
+  <g transform="translate(210,128)">
+    <circle r="30" fill="#6366f1" opacity="0.35"/>
+    <circle r="22" fill="#818cf8"/>
+    <path d="M10 -12 L10 12 L22 0 Z" fill="#fff"/>
+  </g>
+</svg>

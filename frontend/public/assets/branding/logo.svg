@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="64" viewBox="0 0 260 64">
+  <defs>
+    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6366f1"/>
+      <stop offset="0.55" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(4,0)">
+    <path d="M28 4 L52 15 V30 C52 41 42 49 28 56 C14 49 4 41 4 30 V15 Z" fill="url(#mark)"/>
+    <path d="M28 16 L40 23 V33 C40 40 34.6 45 28 48 C21.4 45 16 40 16 33 V23 Z" fill="#0b1124"/>
+    <path d="M28 22 L33 25 V33 C33 36 30.9 38.5 28 40 C25.1 38.5 23 36 23 33 V25 Z" fill="#22d3ee"/>
+  </g>
+  <g font-family="Outfit, Poppins, sans-serif" font-weight="800" letter-spacing="1.5">
+    <text x="72" y="36" font-size="21" fill="#eef2ff">VECTOR STRIKE</text>
+    <text x="268" y="36" font-size="21" fill="#22d3ee">&#9654;</text>
+  </g>
+  <line x1="72" y1="46" x2="128" y2="46" stroke="url(#mark)" stroke-width="2.4" stroke-linecap="round" opacity="0.8"/>
+</svg>

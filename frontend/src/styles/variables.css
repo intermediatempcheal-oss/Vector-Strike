@@ -1,0 +1,67 @@
+:root {
+    /* Brand palette — deep space navy with luminous gaming accents */
+    --vs-bg: #070b18;
+    --vs-bg-2: #0b1124;
+    --vs-bg-3: #101a33;
+    --vs-surface: rgba(255, 255, 255, 0.055);
+    --vs-surface-strong: rgba(255, 255, 255, 0.09);
+    --vs-border: rgba(255, 255, 255, 0.12);
+    --vs-border-strong: rgba(255, 255, 255, 0.22);
+
+    --vs-ink: #eef2ff;
+    --vs-ink-soft: rgba(238, 242, 255, 0.72);
+    --vs-ink-mute: rgba(238, 242, 255, 0.5);
+
+    --vs-indigo: #6366f1;
+    --vs-cyan: #22d3ee;
+    --vs-violet: #a855f7;
+    --vs-blue: #38bdf8;
+    --vs-green: #34d399;
+    --vs-amber: #fbbf24;
+    --vs-rose: #fb7185;
+
+    --vs-primary: #6366f1;
+    --vs-primary-2: #0ea5e9;
+    --vs-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 45%, #22d3ee 100%);
+    --vs-gradient-soft: linear-gradient(135deg, rgba(99, 102, 241, 0.35), rgba(34, 211, 238, 0.25));
+    --vs-glow-primary: 0 8px 32px rgba(99, 102, 241, 0.45);
+    --vs-glow-cyan: 0 8px 32px rgba(34, 211, 238, 0.35);
+    --vs-glow-cyan-soft: 0 12px 40px rgba(34, 211, 238, 0.22);
+
+    --vs-danger: #fb7185;
+    --vs-success: #34d399;
+    --vs-warning: #fbbf24;
+
+    --vs-radius-sm: 12px;
+    --vs-radius: 18px;
+    --vs-radius-lg: 26px;
+    --vs-radius-pill: 999px;
+
+    --vs-space-1: 4px;
+    --vs-space-2: 8px;
+    --vs-space-3: 12px;
+    --vs-space-4: 16px;
+    --vs-space-5: 24px;
+    --vs-space-6: 32px;
+    --vs-space-7: 48px;
+    --vs-space-8: 64px;
+
+    --vs-font-display: 'Outfit', 'Poppins', 'Inter', system-ui, sans-serif;
+    --vs-font-body: 'Inter', system-ui, sans-serif;
+    --vs-font-accent: 'Poppins', 'Inter', system-ui, sans-serif;
+
+    --vs-shadow-1: 0 2px 10px rgba(2, 6, 20, 0.35);
+    --vs-shadow-2: 0 12px 40px rgba(2, 6, 20, 0.55);
+    --vs-shadow-3: 0 24px 70px rgba(2, 6, 20, 0.65);
+
+    --vs-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --vs-duration: 220ms;
+    --vs-duration-lg: 420ms;
+    --vs-step: 4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --vs-duration: 0ms;
+    }
+}

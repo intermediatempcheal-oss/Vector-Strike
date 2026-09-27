@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 480" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Vector Strike arena">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#050a18"/>
+      <stop offset="0.5" stop-color="#0b1b3a"/>
+      <stop offset="1" stop-color="#132a55"/>
+    </linearGradient>
+    <linearGradient id="orb" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="0.55" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b1422"/>
+      <stop offset="1" stop-color="#060a14"/>
+    </linearGradient>
+  </defs>
+  <rect width="1440" height="480" fill="url(#sky)"/>
+  <circle cx="1120" cy="150" r="210" fill="url(#glow)"/>
+  <circle cx="1120" cy="150" r="84" fill="url(#orb)"/>
+  <circle cx="1120" cy="150" r="118" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+  <circle cx="1120" cy="150" r="158" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" stroke-dasharray="4 10"/>
+  <g fill="rgba(255,255,255,0.22)">
+    <circle cx="240" cy="90" r="2"/><circle cx="380" cy="60" r="1.6"/>
+    <circle cx="520" cy="110" r="2.2"/><circle cx="700" cy="44" r="1.8"/>
+    <circle cx="860" cy="86" r="2"/><circle cx="180" cy="170" r="1.6"/>
+    <circle cx="640" cy="150" r="1.4"/><circle cx="1330" cy="70" r="2"/>
+    <circle cx="100" cy="120" r="1.5"/><circle cx="980" cy="46" r="1.8"/>
+  </g>
+  <rect y="336" width="1440" height="144" fill="url(#floor)"/>
+  <g stroke="rgba(34,211,238,0.18)" stroke-width="1">
+    <path d="M0 336 H1440"/><path d="M0 372 H1440"/><path d="M0 408 H1440"/>
+    <path d="M0 444 H1440"/>
+  </g>
+  <g stroke="rgba(34,211,238,0.10)" stroke-width="1">
+    <path d="M120 336 L60 480"/><path d="M360 336 L300 480"/><path d="M600 336 L540 480"/>
+    <path d="M840 336 L780 480"/><path d="M1080 336 L1020 480"/><path d="M1320 336 L1260 480"/>
+  </g>
+  <g fill="#22d3ee" opacity="0.55">
+    <rect x="62" y="380" width="6" height="6"/><rect x="302" y="416" width="6" height="6"/>
+    <rect x="542" y="380" width="6" height="6"/><rect x="782" y="416" width="6" height="6"/>
+    <rect x="1022" y="380" width="6" height="6"/><rect x="1262" y="416" width="6" height="6"/>
+  </g>
+  <text x="1180" y="470" text-anchor="end" font-family="Segoe UI, system-ui, sans-serif" font-size="15" font-weight="600" fill="rgba(255,255,255,0.28)" letter-spacing="6">VECTOR STRIKE ARENA</text>
+</svg>

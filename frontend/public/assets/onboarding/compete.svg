@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="300" viewBox="0 0 420 300" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4c1d95"/>
+      <stop offset="1" stop-color="#0b1124"/>
+    </linearGradient>
+    <linearGradient id="flag" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  <rect width="420" height="300" rx="26" fill="url(#sky3)"/>
+  <!-- racing lanes perspective -->
+  <g stroke="#22d3ee" stroke-width="1.4" opacity="0.35">
+    <line x1="60" y1="300" x2="200" y2="150"/>
+    <line x1="360" y1="300" x2="220" y2="150"/>
+    <line x1="80" y1="330" x2="200" y2="162"/>
+    <line x1="340" y1="330" x2="220" y2="162"/>
+  </g>
+  <!-- checkered strip -->
+  <g>
+    <rect x="180" y="180" width="120" height="10" fill="#0b1124"/>
+    <rect x="180" y="180" width="10" height="5" fill="#eef2ff"/>
+    <rect x="200" y="180" width="10" height="5" fill="#eef2ff"/>
+    <rect x="220" y="180" width="10" height="5" fill="#eef2ff"/>
+    <rect x="240" y="180" width="10" height="5" fill="#eef2ff"/>
+    <rect x="260" y="180" width="10" height="5" fill="#eef2ff"/>
+    <rect x="280" y="180" width="10" height="5" fill="#eef2ff"/>
+    <rect x="190" y="185" width="10" height="2.5" fill="#eef2ff"/>
+    <rect x="210" y="185" width="10" height="2.5" fill="#eef2ff"/>
+  </g>
+  <!-- trophy -->
+  <g transform="translate(300,86)">
+    <circle cx="0" cy="0" r="34" fill="#fbbf24" opacity="0.16"/>
+    <path d="M-22 8 H22 V-8 A22 22 0 0 0 -22 -8 Z" fill="#fbbf24"/>
+    <path d="M-22 8 H22 V4 H-22 Z" fill="#f59e0b"/>
+    <rect x="-12" y="8" width="24" height="8" rx="3" fill="#fbbf24"/>
+    <path d="M-22 -14 A30 30 0 0 1 22 -14" fill="none" stroke="#fbbf24" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <!-- speed lines -->
+  <g stroke="#a5f3fc" stroke-width="2.4" stroke-linecap="round" opacity="0.75">
+    <line x1="30" y1="200" x2="110" y2="200"/>
+    <line x1="355" y1="244" x2="300" y2="244"/>
+  </g>
+</svg>

@@ -1,0 +1,43 @@
+﻿python.exe : Creating test database for alias 'default'...
+At line:1 char:1
++ & D:\vector-strike\backend\.venv\Scripts\python.exe D:\vector-strike\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Creating test d...as 'default'...:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+..........E............E....F..........
+======================================================================
+ERROR: test_username_email_phone_unique (apps.accounts.tests.DbUniqueConstraintTests.test_username_email_phone_unique)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\vector-strike\backend\apps\accounts\tests.py", line 442, in test_username_email_phone_unique
+    dup = User(
+          ^^^^^
+TypeError: apps.accounts.models.User() got multiple values for keyword argument 'username'
+
+======================================================================
+ERROR: test_successful_17plus_account (apps.accounts.tests.RegistrationFlowTests.test_successful_17plus_account)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\vector-strike\backend\apps\accounts\tests.py", line 215, in test_successful_17plus_account
+    self.assertEqual(int(self.client.session["_auth_user_id"]), int(user.id))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '2df0a67a-23bd-4ae2-bcfc-e9a817f93023'
+
+======================================================================
+FAIL: test_login_and_me (apps.accounts.tests.SessionTests.test_login_and_me)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\vector-strike\backend\apps\accounts\tests.py", line 502, in test_login_and_me
+    self.assertEqual(resp.status_code, 200)
+AssertionError: 422 != 200
+
+----------------------------------------------------------------------
+Ran 39 tests in 33.792s
+
+FAILED (failures=1, errors=2)
+Destroying test database for alias 'default'...
+
+Found 39 test(s).
+System check identified no issues (0 silenced).

@@ -1,0 +1,54 @@
+
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m10854[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5173[22m/[39m
+[2m7:33:15 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/SplashPage.tsx[22m
+[2m7:33:15 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/SplashPage.tsx[22m
+[2m7:33:15 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m7:33:15 pm[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2mindex.html[22m
+[2m7:33:15 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m7:34:02 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m7:34:02 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m7:34:03 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/SplashPage.tsx[22m
+[2m7:34:04 pm[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2mindex.html[22m
+[2m7:35:46 pm[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2mindex.html[22m
+[2m7:35:46 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m7:35:46 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m7:35:46 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/SplashPage.tsx[22m
+[2m7:35:47 pm[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2mindex.html[22m
+[2m7:35:47 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/SplashPage.tsx[22m
+[2m7:35:47 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m7:35:47 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/global.css[22m
+[2m8:00:19 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/auth/csrf/[39m
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1595:16)
+[2m8:00:21 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/auth/csrf/[39m
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1595:16)
+[2m8:00:21 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/auth/token/refresh/[39m
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1595:16)
+[2m8:00:21 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/auth/session/[39m
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1595:16)
+[2m8:00:21 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/auth/token/refresh/[39m
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1595:16)
+[2m8:00:21 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/auth/session/[39m
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1595:16)
+[2m8:03:28 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/auth/csrf/[39m
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1595:16)
+[2m8:03:28 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/auth/csrf/[39m
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1595:16)
+[2m8:03:28 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/auth/token/refresh/[39m
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1595:16)
+[2m8:03:28 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/auth/session/[39m
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1595:16)
+[2m8:03:28 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/auth/session/[39m
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1595:16)
